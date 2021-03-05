@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 14:38:21
- * @LastEditTime: 2021-03-05 10:10:36
+ * @LastEditTime: 2021-03-05 16:09:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Xinde\supermall01\src\views\home\Home.vue
@@ -21,8 +21,10 @@ import HomeSwioer from './chukdComps/HomeSwioer.vue';
 import { getHomeMultidata } from "../../network/home";
 import RecommendView from './RecommendView.vue';
 
+
+
 export default {
-  components: { NvaBar, HomeSwioer, RecommendView },
+  components: { NvaBar, HomeSwioer, RecommendView,},
   name: "Home",
   data() {
     return {
