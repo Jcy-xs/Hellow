@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 14:38:21
- * @LastEditTime: 2021-03-04 17:51:07
+ * @LastEditTime: 2021-03-05 10:10:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Xinde\supermall01\src\views\home\Home.vue
@@ -10,6 +10,7 @@
   <div id="home">
     <nva-bar class="home-nav"><div slot="center">购物街</div></nva-bar>
     <home-swioer :banners="banners"></home-swioer>
+    <recommend-view></recommend-view>
   </div>
 </template>
 
@@ -18,9 +19,10 @@ import NvaBar from "../../components/common/navbar/NvaBar.vue";
 import HomeSwioer from './chukdComps/HomeSwioer.vue';
 
 import { getHomeMultidata } from "../../network/home";
+import RecommendView from './RecommendView.vue';
 
 export default {
-  components: { NvaBar, HomeSwioer },
+  components: { NvaBar, HomeSwioer, RecommendView },
   name: "Home",
   data() {
     return {
