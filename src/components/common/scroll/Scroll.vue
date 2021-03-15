@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-11 09:36:57
- * @LastEditTime: 2021-03-11 16:30:56
+ * @LastEditTime: 2021-03-15 17:32:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \supermall01\src\components\common\scroll\Scroll.vue
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll'
+import BScroll from "better-scroll";
 
 export default {
   name: "Scroll",
   props: {
     probeType: {
       type: Number,
-      default: 0
+      default: 0,
     },
     pullUpLoad: {
       type: Boolean,
@@ -31,8 +31,8 @@ export default {
   },
   data() {
     return {
-      scroll: null
-    }
+      scroll: null,
+    };
   },
 
   mounted() {
@@ -40,32 +40,40 @@ export default {
     this.scroll = new BScroll(this.$refs.wrapper, {
       click: true,
       probeType: this.probeType,
-      pullUpLoad: this.pullUpLoad
-    })
+      pullUpLoad: this.pullUpLoad,
+    });
     //2.监听滚动的位置
-    this.scroll.on('scroll', (position) => {
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on("scroll", (position) => {
       // console.log(1);
-      this.$emit('scroll', position)
-    })
-    //3.监听上拉加载更多
-    this.scroll.on('pullingUp', () => {
-      // console.log('上拉加载更多');
-      this.$emit('pullingUp')
-    })
+      this.$emit("scroll", position);
+    });
+    }
+    //3.监听滚到底部
+    if (this.pullUpLoad) {
+      this.scroll.on('pullingUp', () => {
+        this.$emit('pullingUp')
+      })
+    }
+
   },
 
-  
   methods: {
-    scrollTo(x, y, time=300) {
-      this.scroll.scrollTo(x, y, time)
+    scrollTo(x, y, time = 300) {
+      this.scroll && this.scroll.scrollTo(x, y, time);
+    },
+    refresh() {
+      this.scroll && this.scroll.refresh();
     },
     finishPullUp() {
-      this.scroll.finishPullUp()
+      this.scroll && this.scroll.finishPullUp();
+    },
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-
 </style>
