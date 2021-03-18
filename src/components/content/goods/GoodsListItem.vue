@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-10 10:51:10
- * @LastEditTime: 2021-03-15 09:35:33
+ * @LastEditTime: 2021-03-17 17:40:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \supermall01\src\components\content\goods\GoodsListItem.vue
 -->
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+  <div class="goods-item" @click="itemClick">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -28,9 +28,22 @@ props: {
     }
   }
 },
+computed: {
+  showImage() {
+    return this.goodsItem.image || this.goodsItem.show.img
+  }
+},
 methods: {
   imageLoad() {
-    this.$bus.$emit('itemImageLoad')
+    if (this.$route.path.indexOf('/home') !== -1) {
+      this.$bus.$emit('itemImageLoad')
+    } else if (this.$route.path.indexOf('/detail')) {
+      this.$bus.$emit('imageLoad')
+    }
+    
+  },
+  itemClick() {
+    this.$router.push('/detail/' + this.goodsItem.iid)
   }
 }
 }

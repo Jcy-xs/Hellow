@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 14:38:21
- * @LastEditTime: 2021-03-15 17:35:30
+ * @LastEditTime: 2021-03-17 10:27:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Xinde\supermall01\src\views\home\Home.vue
@@ -10,12 +10,12 @@
   <div id="home">
     <nva-bar class="home-nav"><div slot="center">购物街</div></nva-bar>
     <tab-control
-        :titles="['流行', '新款', '精选']"
-        @tabClick="tabClick"
-        ref="tabControl1"
-        class="tab-control"
-        v-show="isTabFixed"
-      >
+      :titles="['流行', '新款', '精选']"
+      @tabClick="tabClick"
+      ref="tabControl1"
+      class="tab-control"
+      v-show="isTabFixed"
+    >
     </tab-control>
     <scroll
       class="content"
@@ -25,7 +25,10 @@
       :pull-up-load="true"
       @pullingUp="loadMore"
     >
-      <home-swioer :banners="banners" @swiperImageLoad= "swiperImageLoad"></home-swioer>
+      <home-swioer
+        :banners="banners"
+        @swiperImageLoad="swiperImageLoad"
+      ></home-swioer>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
       <tab-control
@@ -53,8 +56,7 @@ import NvaBar from "../../components/common/navbar/NvaBar.vue";
 import TabControl from "../../components/content/tabControl/TabControl.vue";
 
 import { getHomeMultidata, getHomeGoods } from "../../network/home";
-import { debounce } from 'common/utils';
-
+import { debounce } from "common/utils";
 
 export default {
   components: {
@@ -81,20 +83,21 @@ export default {
       isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
-      saveY: 0
+      saveY: 0,
     };
   },
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
     },
-    activated() {
-      this.$refs.scroll.scrollTo(0, this.saveY, 0)
-      this.$refs.scroll.refresh()
-    },
-    deactivated() {
-      this.saveY = this.scroll.getScrollY()
-    },
+  },
+  activated() {
+    
+    this.$refs.scroll.scrollTo(0, this.saveY, 0);
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    this.saveY = this.$refs.scroll.getScrollY()
   },
   created() {
     //1.请求多个数据
@@ -106,9 +109,9 @@ export default {
   },
   mounted() {
     //1.监听item中图片加载完成
-    const refresh = debounce(this.$refs.scroll.refresh, 200)
+    const refresh = debounce(this.$refs.scroll.refresh, 200);
     this.$bus.$on("itemImageLoad", () => {
-     refresh()
+      refresh();
     });
   },
 
@@ -126,7 +129,7 @@ export default {
         case 2:
           this.currentType = "sell";
           break;
-      };
+      }
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
@@ -137,13 +140,13 @@ export default {
       //1.判断BackTop是否显示
       this.isShowBackTop = -position.y > 1000;
       //2.决定tabControl是否吸顶(position: fixed)
-      this.isTabFixed = (-position.y) > this.tabOffsetTop
+      this.isTabFixed = -position.y > this.tabOffsetTop;
     },
     loadMore() {
-      this.getHomeGoods(this.currentType)
+      this.getHomeGoods(this.currentType);
     },
     swiperImageLoad() {
-      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
 
     //网络请求相关方法
@@ -160,7 +163,7 @@ export default {
         this.goods[type].page += 1;
 
         //完成上拉加载更多
-        this.$refs.scroll.finishPullUp()
+        this.$refs.scroll.finishPullUp();
       });
     },
   },
@@ -184,7 +187,6 @@ export default {
   top: 0;
   z-index: 9; */
 }
-
 
 .content {
   overflow: hidden;

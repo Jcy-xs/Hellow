@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 10:24:16
- * @LastEditTime: 2021-03-15 17:14:18
+ * @LastEditTime: 2021-03-17 09:42:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Xinde\supermall01\src\App.vue
 -->
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive exclude="Detail">
       <router-view></router-view>
     </keep-alive>
     <main-tab-bar></main-tab-bar>
